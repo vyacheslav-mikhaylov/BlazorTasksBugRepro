@@ -1,0 +1,54 @@
+﻿@using System.Diagnostics
+@page "/counter"
+@inject HttpClient Http
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount. Last request execution time = @queryTime</p>
+
+<button class="btn btn-primary" @onclick="CallService">Call API</button>
+<button class="btn btn-primary" @onclick="DoDelay">Do Delay</button>
+
+@code {
+    private int currentCount = 0;
+    private string queryTime;
+
+    public class HelloResponse
+    {
+        public string Value { get; set; }
+    }
+
+    private async Task CallService()
+    {
+        currentCount++;
+        queryTime = "calculating";
+        
+        var sw = Stopwatch.StartNew();
+        
+        var tasks = Enumerable.Range(0, 10)
+                              .Select(x => Http.GetFromJsonAsync<HelloResponse>("hello"))
+                              .ToList();
+        
+        await Task.WhenAll(tasks);
+        sw.Stop();
+        
+        queryTime = sw.ElapsedMilliseconds.ToString();
+    }
+    
+    private async Task DoDelay()
+    {
+        currentCount++;
+        queryTime = "calculating";
+        
+        var sw = Stopwatch.StartNew();
+        
+        var tasks = Enumerable.Range(0, 10)
+                              .Select(x => Task.Delay(500))
+                              .ToList();
+        
+        await Task.WhenAll(tasks);
+        sw.Stop();
+        
+        queryTime = sw.ElapsedMilliseconds.ToString();
+    }
+}
