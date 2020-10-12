@@ -22,7 +22,7 @@ Delay executed in Chrome:
 ![Delay](/Screenshots/Chrome2.png)
 
 API Calls executed in Chrome with Dev Tools:
-![Chrome API Call DT](/Screenshots/Chrome3 dev.png)
+![Chrome API Call DT](/Screenshots/Chrome3.png)
 
 API Calls executed in Safari:
 ![Safari API Call](/Screenshots/Safari.png)
